@@ -17,7 +17,8 @@ app.post('/submit', function (req, res) {
         res.arrayBuffer() .then(r => fs.writeFileSync("./file", Buffer.from(r) ));
     })
     res.header("Access-Control-Allow-Origin", "*");
-    res.end()
+    res.end("api_success");
+
 })
 app.options('/submit', function (req, res) {
     res.header("Access-Control-Allow-Origin", "*");
