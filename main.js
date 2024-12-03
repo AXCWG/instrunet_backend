@@ -26,7 +26,7 @@ app.post('/submit', function (req, res) {
     var errcb = function (d) {
         console.log(d.toString());
     }
-    nrc.run(["pip install audio-separator" ,"audio-separator ./audio_file --model-filename UVR_MDXNET_KARA.onnx"], {
+    nrc.run(["pip install audio-separator" ,"audio-separator ./audio_file --model_filename UVR_MDXNET_KARA.onnx  --mdx_segment_size 4000 --mdx_overlap 0.75  --output_dir output "], {
         onData: callback,
         onError: errcb
     })
