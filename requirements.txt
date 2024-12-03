@@ -8,3 +8,4 @@ soundstretch==1.2
 tqdm==4.65.0
 Pillow==9.5.0
 resampy==0.4.2
+numpy<2

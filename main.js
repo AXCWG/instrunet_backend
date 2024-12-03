@@ -8,7 +8,7 @@ const bodyParser = require("body-parser");
 const {spawn} = require("child_process");
 const nrc = require('node-run-cmd')
 console.log(process.cwd())
-app.use(bodyParser.json({"limit": "50mb"}));
+app.use(bodyParser.json({"limit": "100mb"}));
 app.use(express.json());
 
 db.close()
@@ -26,11 +26,11 @@ app.post('/submit', function (req, res) {
     var errcb = function (d) {
         console.log(d.toString());
     }
-
-    nrc.run("python separate.py -m MDX_Net_Models/UVR_MDXNET_KARA.onnx -d -c 4000 ./audio_file", {
+    nrc.run(["pip install -r requirements.txt" ,"python separate.py -m MDX_Net_Models/UVR_MDXNET_KARA.onnx -d -c 4000 ./audio_file"], {
         onData: callback,
         onError: errcb
-    });
+    })
+
 
     res.end("api_success");
 
