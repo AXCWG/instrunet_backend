@@ -1,4 +1,6 @@
 node_modules
 database.db
 secret.txt
-file
+audio_file
+MDX_Net_Models
+separated
