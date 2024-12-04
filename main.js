@@ -15,10 +15,16 @@ db.close()
 
 
 app.post('/submit', function (req, res) {
+    res.header("Access-Control-Allow-Origin", "*");
+
+
     fetch(req.body.file).then(res => {
         res.arrayBuffer().then(r => fs.writeFileSync("./audio_file", Buffer.from(r)));
     })
-    res.header("Access-Control-Allow-Origin", "*");
+        .catch(err => {
+        console.log(err)
+        res.sendStatus(500)
+    });
 
     var callback = function (d) {
         console.log(d.toString());
@@ -26,14 +32,14 @@ app.post('/submit', function (req, res) {
     var errcb = function (d) {
         console.log(d.toString());
     }
-    nrc.run(["pip install audio-separator" ,"audio-separator ./audio_file --model_filename UVR_MDXNET_KARA.onnx  --mdx_segment_size 4000 --mdx_overlap 0.75  --output_dir output "], {
+    nrc.run(["pip install audio-separator", "audio-separator ./audio_file --model_filename UVR_MDXNET_KARA.onnx  --mdx_segment_size 4000 --mdx_overlap 0.75  --output_dir output "], {
         onData: callback,
         onError: errcb
+    }).then(r => {
+        r[1] === 1 ?
+            res.sendStatus(500)
+            : res.end("api_success");
     })
-
-
-    res.end("api_success");
-
 
 })
 app.options('/submit', function (req, res) {
